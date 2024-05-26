@@ -1,0 +1,122 @@
+﻿@using slider.ViewModels.Products
+@model List<ProductVM>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="content-wrapper mt-5">
+    <!-- Content -->
+
+    <div class="container-xxl flex-grow-1 container-p-y" style="align-items:center;display:flex;justify-content:center;">
+
+        <!-- Basic Bootstrap Table -->
+        <div class="card">
+            <h5 class="card-header">Table Basic</h5>
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Description</th>
+
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Operations</th>
+
+
+                        </tr>
+
+                    </thead>
+                    <a asp-area="Admin" asp-controller="Product" asp-action="Index">  <button type="button" class="btn btn-success " style="margin-left:300px;">Create</button></a>
+
+
+                    <tbody class="table-border-bottom-0">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                 <img src="~/img/@item.Image" style="width:100px;height:100px;" />
+
+                                </td>
+                                <td>
+                                    @item.Name
+
+                                </td>
+                                <td>
+                                    @item.Description
+
+                                </td>
+                                <td>
+                                    @item.Price
+
+                                </td>
+                                <td>
+                                    @item.Category
+
+                                </td>
+                                <td>
+
+                                    <a asp-action="Detail" asp-route-id="@item.Id"> <button type="button" class="btn btn-info">Info</button></a>
+                                    <a asp-action="Edit" asp-route-id="@item.Id"><button type="button" class="btn btn-primary">Edit</button> </a>
+                                    <form class="forms-sample d-inline" asp-action="Delete" method="post" asp-route-id="@item.Id">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+
+                                    </form>
+
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+                </table     
+                <div class="paginate-area"  style="margin-left:100px;">
+                        <nav aria-label="...">
+  <ul class="pagination">
+                            @if (ViewBag.currentPage > 1)
+                            {
+                                             <li class="page-item ">
+       <a class="page-link" asp-action="Index" asp-route-page =" @(ViewBag.currentPage-1)">Previous</a>
+                                </li>
+                            }
+                            else
+                            {
+                                   <li class="page-item disabled ">
+       <a class="page-link" href="#">Previous</a>
+                                </li>
+                            }
+
+    @for (int i = 1; i <= @ViewBag.PageCount; i++){
+    <li class="page-item @(ViewBag.currentPage == i ? "disabled" :""  ) "><a class="page-link@(ViewBag.currentPage == i ? "active" :""  )" asp-action="Index" asp-route-page="@i">@i</a></li>
+
+    }
+    @if (ViewBag.PageCount > ViewBag.currentPage)
+                            {
+                                             <li class="page-item ">
+       <a class="page-link" asp-action="Index" asp-route-page =" @(ViewBag.currentPage+1)">Next</a>
+                                </li>
+                            }
+                            else
+                            {
+                                   <li class="page-item disabled ">
+       <a class="page-link" href="#">Next</a>
+                                </li>
+                            }
+  </ul>
+</nav>
+                </div>
+            
+
+
+
+            </div>
+
+        </div>
+        <!--/ Basic Bootstrap Table -->
+    </div>
+
+
+
+
+
